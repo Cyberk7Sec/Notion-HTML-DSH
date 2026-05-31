@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nav Buttons</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:              #0e0f13;
+  --surface:         #13151a;
+  --surface-hover:   #1c1f27;
+  --border:          rgba(255,255,255,0.06);
+  --border-hover:    rgba(255,255,255,0.12);
+  --white:           #f0f0f0;
+  --white-dim:       rgba(240,240,240,0.5);
+  --white-muted:     rgba(240,240,240,0.2);
+  --accent:          #4F8EF7;
+  --accent-subtle:   rgba(79,142,247,0.1);
+  --accent-line:     rgba(79,142,247,0.2);
+  --pastel-lav:      rgba(155,135,195,0.13);
+  --pastel-lav-bd:   rgba(155,135,195,0.28);
+  --pastel-lav-txt:  #b8a8d8;
+  --pastel-slate:    rgba(126,184,212,0.11);
+  --pastel-slate-bd: rgba(126,184,212,0.25);
+  --pastel-slate-txt:#9ac8e0;
+  --pastel-cream:    rgba(220,200,160,0.1);
+  --pastel-cream-bd: rgba(220,200,160,0.24);
+  --pastel-cream-txt:#d4c090;
+  --pastel-rose:     rgba(195,135,145,0.11);
+  --pastel-rose-bd:  rgba(195,135,145,0.26);
+  --pastel-rose-txt: #c89090;
+  --kat:             #c8a96e;
+  --nej:             #7eb8d4;
+}
+html, body {
+  background: var(--bg);
+  font-family: 'Space Grotesk', sans-serif;
+  overflow: hidden;
+  width: 100%;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  padding: 14px 16px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s, transform 0.12s;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.card:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+}
+.card:hover::before { opacity: 1; }
+
+/* Per-card accent colors */
+.card-home::before   { background: var(--accent); }
+.card-food::before   { background: var(--pastel-cream-txt); }
+.card-money::before  { background: var(--nej); }
+.card-biz::before    { background: var(--pastel-rose-txt); }
+.card-growth::before { background: var(--pastel-lav-txt); }
+.card-chores::before { background: var(--pastel-slate-txt); }
+
+.card-home:hover   { border-color: var(--accent-line); background: var(--accent-subtle); }
+.card-food:hover   { border-color: var(--pastel-cream-bd); background: var(--pastel-cream); }
+.card-money:hover  { border-color: var(--pastel-slate-bd); background: var(--pastel-slate); }
+.card-biz:hover    { border-color: var(--pastel-rose-bd); background: var(--pastel-rose); }
+.card-growth:hover { border-color: var(--pastel-lav-bd); background: var(--pastel-lav); }
+.card-chores:hover { border-color: var(--pastel-slate-bd); background: var(--pastel-slate); }
+
+.card-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+.card-body { flex: 1; }
+.card-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: -0.2px;
+  margin-bottom: 2px;
+}
+.card-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.8px;
+  color: var(--white-muted);
+  line-height: 1.5;
+}
+.card-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 2px;
+  align-self: flex-start;
+}
+.tag-kat   { background: rgba(200,169,110,0.12); color: var(--kat);  border: 1px solid rgba(200,169,110,0.2); }
+.tag-nej   { background: rgba(126,184,212,0.1);  color: var(--nej);  border: 1px solid rgba(126,184,212,0.2); }
+.tag-both  { background: rgba(255,255,255,0.05); color: var(--white-muted); border: 1px solid var(--border); }
+.tag-acc   { background: var(--accent-subtle);   color: var(--accent); border: 1px solid var(--accent-line); }
+.tag-lav   { background: var(--pastel-lav);  color: var(--pastel-lav-txt);  border: 1px solid var(--pastel-lav-bd); }
+.tag-rose  { background: var(--pastel-rose); color: var(--pastel-rose-txt); border: 1px solid var(--pastel-rose-bd); }
+
+.arrow {
+  font-size: 10px;
+  color: var(--white-muted);
+  align-self: flex-end;
+  transition: color 0.15s, transform 0.15s;
+}
+.card:hover .arrow { color: var(--white-dim); transform: translate(2px, -2px); }
+</style>
+</head>
+<body>
+<div class="grid">
+
+  <a class="card card-home" href="PASTE_HOME_URL_HERE" target="_top">
+    <div class="card-icon">⌂</div>
+    <div class="card-body">
+      <div class="card-title">Home</div>
+      <div class="card-sub">Daily overview<br>Today's pulse</div>
+    </div>
+    <span class="card-tag tag-acc">Active</span>
+    <div class="arrow">↗</div>
+  </a>
+
+  <a class="card card-food" href="PASTE_NUTRITION_URL_HERE" target="_top">
+    <div class="card-icon">🍽</div>
+    <div class="card-body">
+      <div class="card-title">Nutrition</div>
+      <div class="card-sub">Meal plan<br>Recipes · Grocery</div>
+    </div>
+    <span class="card-tag tag-kat">Kat leads</span>
+    <div class="arrow">↗</div>
+  </a>
+
+  <a class="card card-money" href="PASTE_FINANCES_URL_HERE" target="_top">
+    <div class="card-icon">◎</div>
+    <div class="card-body">
+      <div class="card-title">Finances</div>
+      <div class="card-sub">Bills · Savings<br>Big expenses</div>
+    </div>
+    <span class="card-tag tag-nej">Nej leads</span>
+    <div class="arrow">↗</div>
+  </a>
+
+  <a class="card card-biz" href="PASTE_BUSINESS_URL_HERE" target="_top">
+    <div class="card-icon">▣</div>
+    <div class="card-body">
+      <div class="card-title">Business</div>
+      <div class="card-sub">Pickups<br>Marketplace</div>
+    </div>
+    <span class="card-tag tag-both">Shared</span>
+    <div class="arrow">↗</div>
+  </a>
+
+  <a class="card card-growth" href="PASTE_GROWTH_URL_HERE" target="_top">
+    <div class="card-icon">◇</div>
+    <div class="card-body">
+      <div class="card-title">Growth</div>
+      <div class="card-sub">Certs · Habits<br>Goals · Gym</div>
+    </div>
+    <span class="card-tag tag-lav">Kat leads</span>
+    <div class="arrow">↗</div>
+  </a>
+
+  <a class="card card-chores" href="PASTE_CHORES_URL_HERE" target="_top">
+    <div class="card-icon">✦</div>
+    <div class="card-body">
+      <div class="card-title">Chores</div>
+      <div class="card-sub">Arena · Score<br>Weekly log</div>
+    </div>
+    <span class="card-tag tag-rose">Compete</span>
+    <div class="arrow">↗</div>
+  </a>
+
+</div>
+</body>
+</html>
