@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jamuvia Home Header</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css">
+<style>
+
+/* ============================================================ */
+/*  EDIT HERE — your settings                                   */
+/* ============================================================ */
+:root {
+    --gold:       #C9A766;   /* main gold accent */
+    --gold-dim:   #9C8A5E;   /* muted gold (labels) */
+    --text:       #EDEBE4;   /* bright text */
+    --text-soft:  #A8A296;   /* soft text */
+    --frame:      rgba(201,167,102,0.55); /* arch frame color */
+    --radius:     14px;
+}
+
+/* WEATHER LOCATION — Elizabeth, NJ. Change lat/lon to move it.  */
+/* (set in the <script> at the bottom: LAT / LON)                */
+
+/* CARD IMAGES — replace these with YOUR raw GitHub URLs.        */
+/* They must be DIRECT image links ending in .png                */
+/* e.g. https://raw.githubusercontent.com/USER/REPO/main/F_Nutrition.png */
+/* For now they point to the filenames sitting next to this file. */
+/* ============================================================ */
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { background: transparent; font-family:'DM Sans',sans-serif; -webkit-font-smoothing:antialiased; }
+
+.m  { font-family:'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; }
+.p  { font-family:'Playfair Display',serif; }
+.c  { font-family:'Cormorant Garamond',serif; }
+
+.header {
+    background: transparent;
+    border: 1px solid rgba(201,167,102,0.22);
+    border-radius: 18px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: stretch;
+    gap: 22px;
+    color: var(--text);
+}
+
+/* ---------- LEFT COLUMN ---------- */
+.left { flex: 1.25; display:flex; flex-direction:column; }
+
+.weather {
+    border: 1px solid rgba(201,167,102,0.30);
+    border-radius: 16px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.weather .loc { font-size:11px; color:var(--gold-dim); line-height:1.5; }
+.weather .icon { font-size:34px; color:var(--gold); }
+.weather .temp { font-size:30px; color:var(--text); line-height:1; }
+.weather .temp sup { font-size:15px; color:var(--gold-dim); }
+.weather .cond { font-size:15px; font-style:italic; color:var(--text-soft); margin-top:2px; }
+.forecast { display:flex; gap:16px; margin-left:auto; }
+.forecast .day { text-align:center; }
+.forecast .dname { font-size:10px; color:var(--gold-dim); }
+.forecast .dico { font-size:15px; color:var(--text-soft); display:block; margin:5px 0; }
+.forecast .dtemp { font-size:11px; color:#C7C2B6; }
+
+.brandwrap { margin-top:16px; flex:1; display:flex; flex-direction:column; justify-content:center; }
+.ccenter { font-size:9px; color:var(--gold-dim); margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+.ccenter::before { content:""; width:22px; height:1px; background:var(--gold-dim); display:inline-block; }
+.brand { display:flex; align-items:baseline; gap:8px; }
+.brand .name { font-size:34px; color:var(--text); }
+.brand .home { font-size:30px; font-style:italic; color:var(--gold); }
+
+.pills { display:flex; align-items:center; gap:9px; margin-top:14px; }
+.pill {
+    font-size:10px; color:var(--gold); text-decoration:none;
+    border:1px solid rgba(201,167,102,0.45); border-radius:8px;
+    padding:7px 14px; transition:background .18s ease, color .18s ease;
+}
+.pill:hover { background:rgba(201,167,102,0.16); color:var(--text); }
+.pill.kat   { color:#B7AE9A; border-color:rgba(183,174,154,0.4); }
+.pill.nej   { color:#9FB0C4; border-color:rgba(159,176,196,0.45); }
+.week { font-size:9px; color:#5C584E; margin-left:auto; }
+
+.footer { font-size:9px; color:#6E695D; margin-top:14px; }
+
+/* ---------- MIDDLE: CLOCK ---------- */
+.clock { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 8px; }
+.clock svg { display:block; }
+.clock .time { font-size:19px; color:var(--text); margin-top:12px; letter-spacing:.02em; }
+.clock .date { font-size:14px; font-style:italic; color:var(--text-soft); margin-top:2px; }
+
+/* ---------- RIGHT: ARCHED CARDS ---------- */
+.cards { flex:1.15; display:flex; gap:11px; align-items:flex-end; }
+.card { flex:1; position:relative; }
+.arch {
+    display:block;
+    height:150px;
+    border:2px solid var(--frame);
+    border-radius:80px 80px 10px 10px;
+    background-size:cover;
+    background-position:center;
+    text-decoration:none;
+}
+.card-label {
+    display:block;
+    font-size:9px; color:var(--gold); text-align:center;
+    border:1px solid rgba(201,167,102,0.35); border-radius:6px;
+    padding:5px 0; margin-top:8px; text-decoration:none;
+    background:rgba(201,167,102,0.06);
+    transition:background .18s ease;
+}
+.card:hover .card-label { background:rgba(201,167,102,0.18); color:var(--text); }
+
+/* dropdown */
+.dropdown {
+    position:absolute; left:0; right:0; top:100%;
+    margin-top:6px; z-index:30;
+    background:#141414; border:1px solid rgba(201,167,102,0.35);
+    border-radius:10px; padding:6px;
+    opacity:0; visibility:hidden; transform:translateY(-4px);
+    transition:opacity .16s ease, transform .16s ease, visibility .16s;
+}
+.card:hover .dropdown { opacity:1; visibility:visible; transform:translateY(0); }
+.dropdown a {
+    display:block; font-size:11px; color:var(--text-soft);
+    text-decoration:none; padding:7px 9px; border-radius:6px;
+    font-family:'DM Sans',sans-serif; letter-spacing:0;
+}
+.dropdown a:hover { background:rgba(201,167,102,0.14); color:var(--gold); }
+
+@media (max-width: 820px) {
+    .header { flex-direction:column; }
+    .forecast { margin-left:0; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+
+    <!-- LEFT -->
+    <div class="left">
+        <div class="weather">
+            <div class="loc m">Elizabeth<br>Weather</div>
+            <i class="ti ti-sun icon" id="wIcon"></i>
+            <div>
+                <div class="temp p"><span id="wTemp">--</span><sup>°F</sup></div>
+                <div class="cond c" id="wCond">loading…</div>
+            </div>
+            <div class="forecast" id="wForecast"></div>
+        </div>
+
+        <div class="brandwrap">
+            <div class="ccenter m">Home Command Center</div>
+            <div class="brand">
+                <span class="name p">Jamuvia</span>
+                <span class="home c">'s Home</span>
+            </div>
+            <div class="pills">
+                <a target="_top" class="pill kat m" href="#KAT_TASKS_VIEW_LINK">Kat</a>
+                <a target="_top" class="pill nej m" href="#NEJ_TASKS_VIEW_LINK">Nej</a>
+                <a target="_top" class="pill m" href="https://app.notion.com/p/B-P5-GROWTH-36a07e08a80b80499a4dcb9b12a19c3d?source=copy_link">Growth</a>
+                <span class="week m" id="weekNum">Week --</span>
+            </div>
+        </div>
+
+        <div class="footer m">Elizabeth · NJ · 2026</div>
+    </div>
+
+    <!-- MIDDLE: CLOCK -->
+    <div class="clock">
+        <svg width="92" height="92" viewBox="0 0 100 100" id="clockSvg">
+            <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(201,167,102,0.30)" stroke-width="1"/>
+            <g stroke="#C9A766" stroke-width="1.3" id="ticks"></g>
+            <line id="hHand" x1="50" y1="50" x2="50" y2="30" stroke="#EDEBE4" stroke-width="2.6" stroke-linecap="round"/>
+            <line id="mHand" x1="50" y1="50" x2="50" y2="20" stroke="#C9A766" stroke-width="1.9" stroke-linecap="round"/>
+            <line id="sHand" x1="50" y1="50" x2="50" y2="18" stroke="rgba(201,167,102,0.7)" stroke-width="0.8" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="2.4" fill="#C9A766"/>
+        </svg>
+        <div class="time p" id="cTime">--:--</div>
+        <div class="date c" id="cDate">—</div>
+    </div>
+
+    <!-- RIGHT: ARCHED CARDS -->
+    <div class="cards">
+
+        <div class="card">
+            <a target="_top" class="arch" style="background-image:url('F_Nutrition.png')" href="https://app.notion.com/p/B-P2-NUTRITION-36a07e08a80b80bb9dc8eccc3e7c75de?source=copy_link"></a>
+            <a target="_top" class="card-label m" href="https://app.notion.com/p/B-P2-NUTRITION-36a07e08a80b80bb9dc8eccc3e7c75de?source=copy_link">Nutrition</a>
+            <div class="dropdown">
+                <a target="_top" href="https://app.notion.com/p/Weekly-Meal-Plan-36f07e08a80b801e99f1f758afdf0900?source=copy_link">This Week Menu</a>
+                <a target="_top" href="https://app.notion.com/p/DS-PLANNING-36e07e08a80b803cb655d0333a20763d?source=copy_link">Meal &amp; Cooking Planner</a>
+                <a target="_top" href="https://app.notion.com/p/DS-Ingredients-36e07e08a80b80b5b9d3f977d2cba9fd?source=copy_link">Ingredients</a>
+                <a target="_top" href="https://app.notion.com/p/Recipe-Book-36f07e08a80b8059800bf456266da427?source=copy_link">Recipe Book</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <a target="_top" class="arch" style="background-image:url('F_Finances.png')" href="https://app.notion.com/p/B-P3-FINANCES-36a07e08a80b80f3b19ae27b36bdd6e8?source=copy_link"></a>
+            <a target="_top" class="card-label m" href="https://app.notion.com/p/B-P3-FINANCES-36a07e08a80b80f3b19ae27b36bdd6e8?source=copy_link">Finances</a>
+            <div class="dropdown">
+                <a target="_top" href="https://app.notion.com/p/FINANCE-1-36f07e08a80b80159ce7f79d4cb0d0ec?source=copy_link">Finance #1</a>
+                <a target="_top" href="https://app.notion.com/p/FINANCE-2-36f07e08a80b805081c9c25847fa58c7?source=copy_link">Finance #2</a>
+                <a target="_top" href="https://app.notion.com/p/FINANCE-3-36f07e08a80b80f09649d6dfbb140eeb?source=copy_link">Finance #3</a>
+                <a target="_top" href="https://app.notion.com/p/FINANCE-4-36f07e08a80b809896beda7b41aef2cb?source=copy_link">Finance #4</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <a target="_top" class="arch" style="background-image:url('F_Business.png')" href="https://app.notion.com/p/B-P4-BUSINESS-36a07e08a80b80f8b6dbfbbb15e6e1b5?source=copy_link"></a>
+            <a target="_top" class="card-label m" href="https://app.notion.com/p/B-P4-BUSINESS-36a07e08a80b80f8b6dbfbbb15e6e1b5?source=copy_link">Business</a>
+            <div class="dropdown">
+                <a target="_top" href="https://app.notion.com/p/BUSINESS-1-36f07e08a80b808c9ae7ea259266fcd0?source=copy_link">Business #1</a>
+                <a target="_top" href="https://app.notion.com/p/BUSINESS-2-36f07e08a80b8053b217f078faaab22d?source=copy_link">Business #2</a>
+                <a target="_top" href="https://app.notion.com/p/BUSINESS-3-36f07e08a80b80c1b69bfbeecd8f602b?source=copy_link">Business #3</a>
+                <a target="_top" href="https://app.notion.com/p/BUSINESS-4-36f07e08a80b8096a49cf17530736345?source=copy_link">Business #4</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+/* ---------- CLOCK ---------- */
+(function(){
+    const ticks = document.getElementById('ticks');
+    for (let i=0;i<12;i++){
+        const a = (i*30) * Math.PI/180;
+        const x1 = 50 + Math.sin(a)*44, y1 = 50 - Math.cos(a)*44;
+        const x2 = 50 + Math.sin(a)*40, y2 = 50 - Math.cos(a)*40;
+        const ln = document.createElementNS('http://www.w3.org/2000/svg','line');
+        ln.setAttribute('x1',x1.toFixed(1)); ln.setAttribute('y1',y1.toFixed(1));
+        ln.setAttribute('x2',x2.toFixed(1)); ln.setAttribute('y2',y2.toFixed(1));
+        ticks.appendChild(ln);
+    }
+    function hand(id,len,ang){
+        const x = 50 + Math.sin(ang)*len, y = 50 - Math.cos(ang)*len;
+        const el = document.getElementById(id);
+        el.setAttribute('x2', x.toFixed(2)); el.setAttribute('y2', y.toFixed(2));
+    }
+    function tick(){
+        const d = new Date();
+        const h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
+        hand('hHand',22,((h%12)+m/60)*30*Math.PI/180);
+        hand('mHand',30,(m+s/60)*6*Math.PI/180);
+        hand('sHand',32,s*6*Math.PI/180);
+        let hh = h%12; if(hh===0) hh=12;
+        const ap = h>=12?'PM':'AM';
+        document.getElementById('cTime').textContent = hh+':'+String(m).padStart(2,'0')+' '+ap;
+        document.getElementById('cDate').textContent =
+            d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+        // week number
+        const oneJan = new Date(d.getFullYear(),0,1);
+        const week = Math.ceil((((d - oneJan)/86400000)+oneJan.getDay()+1)/7);
+        document.getElementById('weekNum').textContent = 'Week '+week;
+    }
+    tick(); setInterval(tick,1000);
+})();
+
+/* ---------- LIVE WEATHER (Open-Meteo, no key) ---------- */
+(function(){
+    const LAT = 40.6639, LON = -74.2107;  /* Elizabeth, NJ */
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON
+        + '&current=temperature_2m,weather_code'
+        + '&daily=weather_code,temperature_2m_max'
+        + '&temperature_unit=fahrenheit&timezone=America%2FNew_York';
+
+    const icon = c => c===0?'ti-sun': c<=3?'ti-cloud': c<=48?'ti-cloud-fog'
+        : c<=67?'ti-cloud-rain': c<=77?'ti-snowflake': c<=82?'ti-cloud-rain'
+        : c<=99?'ti-cloud-bolt':'ti-cloud';
+    const cond = c => c===0?'clear sky': c<=3?'partly cloudy': c<=48?'foggy'
+        : c<=67?'rainy': c<=77?'snowy': c<=82?'showers': c<=99?'thunderstorm':'cloudy';
+
+    fetch(url).then(r=>r.json()).then(d=>{
+        document.getElementById('wTemp').textContent = Math.round(d.current.temperature_2m);
+        document.getElementById('wCond').textContent = cond(d.current.weather_code);
+        document.getElementById('wIcon').className = 'ti '+icon(d.current.weather_code)+' icon';
+        const fc = document.getElementById('wForecast');
+        const names = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        let html = '';
+        for (let i=1;i<=3;i++){
+            const dt = new Date(d.daily.time[i] + 'T00:00');
+            html += '<div class="day"><div class="dname m">'+names[dt.getDay()]+'</div>'
+                + '<i class="ti '+icon(d.daily.weather_code[i])+' dico"></i>'
+                + '<div class="dtemp m">'+Math.round(d.daily.temperature_2m_max[i])+'°</div></div>';
+        }
+        fc.innerHTML = html;
+    }).catch(()=>{ document.getElementById('wCond').textContent = 'weather unavailable'; });
+})();
+</script>
+</body>
+</html>
