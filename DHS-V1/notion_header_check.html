@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jamuvia Header</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C5A059;
+    --gold-dim: rgba(197,160,89,0.5);
+    --gold-subtle: rgba(197,160,89,0.12);
+    --gold-line: rgba(197,160,89,0.2);
+    --cream: #E8DFC8;
+    --cream-dim: rgba(232,223,200,0.6);
+    --cream-muted: rgba(232,223,200,0.25);
+    --sage: #6a9e82;
+    --sage-dim: rgba(106,158,130,0.5);
+    --blue: #7BAFD4;
+    --blue-dim: rgba(123,175,212,0.45);
+    --bg: #111714;
+    --surface: #161c18;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  .header {
+    width: 100%;
+    height: 100vh;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle grid texture */
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(197,160,89,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(197,160,89,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* Top accent line */
+  .top-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), var(--sage-dim), transparent);
+  }
+
+  /* Bottom accent line */
+  .bottom-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+  }
+
+  /* Left vertical accent */
+  .left-accent {
+    position: absolute;
+    left: 24px;
+    top: 20%;
+    bottom: 20%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--gold-line), transparent);
+  }
+
+  .inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* LEFT: main identity */
+  .identity {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--gold-dim);
+  }
+
+  .title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  .title-italic {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cream-muted);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .subtitle-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    flex-shrink: 0;
+  }
+
+  /* MIDDLE: live date/time */
+  .datetime-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 0 40px;
+    border-left: 1px solid rgba(197,160,89,0.1);
+    border-right: 1px solid rgba(197,160,89,0.1);
+  }
+
+  .time-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: -1px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .time-display span {
+    color: var(--gold);
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  .date-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cream-muted);
+    text-align: center;
+  }
+
+  .day-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+  }
+
+  /* RIGHT: owner tags + location */
+  .meta-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .owner-tags {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .tag-kat {
+    background: var(--gold-subtle);
+    color: var(--gold);
+    border: 1px solid var(--gold-line);
+  }
+
+  .tag-nej {
+    background: rgba(123,175,212,0.08);
+    color: var(--blue);
+    border: 1px solid rgba(123,175,212,0.18);
+  }
+
+  .tag-home {
+    background: rgba(106,158,130,0.08);
+    color: var(--sage);
+    border: 1px solid rgba(106,158,130,0.18);
+  }
+
+  .location {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(232,223,200,0.18);
+  }
+
+  /* Bottom strip: nav quick links */
+  .nav-strip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 44px;
+    background: rgba(197,160,89,0.04);
+    border-top: 1px solid rgba(197,160,89,0.1);
+    display: flex;
+    align-items: center;
+    padding: 0 48px;
+    gap: 0;
+  }
+
+  .nav-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(232,223,200,0.3);
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid rgba(197,160,89,0.08);
+    cursor: default;
+    transition: color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .nav-item:first-child { padding-left: 0; }
+
+  .nav-item:hover {
+    color: var(--gold);
+    background: rgba(197,160,89,0.04);
+  }
+
+  .nav-item.active {
+    color: var(--gold);
+  }
+
+  .nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .nav-item-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--sage-dim);
+    margin-right: 8px;
+  }
+
+  .nav-spacer {
+    flex: 1;
+  }
+
+  .nav-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    color: rgba(106,158,130,0.5);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--sage);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* Fade in on load */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .identity { animation: fadeUp 0.6s ease forwards; }
+  .datetime-block { animation: fadeUp 0.6s ease 0.1s forwards; opacity: 0; }
+  .meta-block { animation: fadeUp 0.6s ease 0.2s forwards; opacity: 0; }
+  .nav-strip { animation: fadeUp 0.4s ease 0.3s forwards; opacity: 0; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="top-bar"></div>
+  <div class="left-accent"></div>
+
+  <div class="inner">
+
+    <div class="identity">
+      <div class="eyebrow">Home Command Center</div>
+      <div class="title-row">
+        <span class="title">Jamuvia</span>
+        <span class="title-italic">'s Home</span>
+      </div>
+      <div class="subtitle">
+        <span>Kat</span>
+        <div class="subtitle-dot"></div>
+        <span>Nejaun</span>
+        <div class="subtitle-dot"></div>
+        <span>Elizabeth, NJ</span>
+        <div class="subtitle-dot"></div>
+        <span id="week-label">Week —</span>
+      </div>
+    </div>
+
+    <div class="datetime-block">
+      <div class="time-display" id="clock">--<span>:</span>--</div>
+      <div class="date-display" id="date-display">— — —</div>
+      <div class="day-display" id="day-display">———</div>
+    </div>
+
+    <div class="meta-block">
+      <div class="owner-tags">
+        <span class="tag tag-kat">Kat</span>
+        <span class="tag tag-nej">Nejaun</span>
+        <span class="tag tag-home">Shared</span>
+      </div>
+      <div class="location">Elizabeth · NJ · 2026</div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <div class="nav-item active"><div class="nav-item-dot"></div>Home</div>
+    <div class="nav-item"><div class="nav-item-dot"></div>Nutrition</div>
+    <div class="nav-item"><div class="nav-item-dot"></div>Finances</div>
+    <div class="nav-item"><div class="nav-item-dot"></div>Business</div>
+    <div class="nav-item"><div class="nav-item-dot"></div>Growth</div>
+    <div class="nav-item"><div class="nav-item-dot"></div>Chores</div>
+    <div class="nav-spacer"></div>
+    <div class="nav-status"><div class="status-dot"></div>Live</div>
+  </div>
+
+  <div class="bottom-bar"></div>
+</div>
+
+<script>
+  const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function getWeekNumber(d) {
+    const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const dayNum = date.getUTCDay() || 7;
+    date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+    return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+  }
+
+  function tick() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+
+    document.getElementById('clock').innerHTML = `${h}<span>:</span>${m}`;
+
+    const day = DAYS[now.getDay()];
+    const mon = MONTHS[now.getMonth()];
+    const date = now.getDate();
+    const year = now.getFullYear();
+
+    document.getElementById('date-display').textContent = `${mon} ${date}, ${year}`;
+    document.getElementById('day-display').textContent = day.toUpperCase();
+    document.getElementById('week-label').textContent = `Week ${getWeekNumber(now)}`;
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>
+</body>
+</html>
